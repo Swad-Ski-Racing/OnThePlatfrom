@@ -50,12 +50,21 @@
         <a href="#">Privacy Policy</a>
         <a href="#">Terms of Service</a>
       </div>
-      <div id="admin-login" style="margin-top: 2rem;">
-    <h3>Admin Access</h3>
-    <input type="text" id="admin-email" placeholder="Username" />
-    <input type="password" id="admin-password" placeholder="Password" />
-    <button id="admin-login-btn">Login as Admin</button>
+      <div id="admin-login" style="margin-top: 2rem; max-width: 450px; width: 100%; margin-left: auto; margin-right: auto;">
+  <h3>Admin Access</h3>
+  <div class="inputs-row">
+    <div class="input-group">
+      <label for="admin-email">Username</label>
+      <input type="text" id="admin-email" placeholder="Username" />
+    </div>
+    <div class="input-group">
+      <label for="admin-password">Password</label>
+      <input type="password" id="admin-password" placeholder="Password" />
+    </div>
   </div>
+  <button id="admin-login-btn">Login as Admin</button>
+</div>
+
   
   <!-- Hidden Download Button -->
   <button id="download-btn" style="display:none; margin-top: 1rem;">Download Spreadsheet</button>
