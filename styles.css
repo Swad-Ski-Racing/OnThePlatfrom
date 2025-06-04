@@ -127,10 +127,14 @@
   margin-left: auto;
   margin-right: auto;
   color: white; /* match page text color */
+  /* Optional: add padding for alignment with form */
+  padding: 0 1rem;
+  box-sizing: border-box;
 }
 
 #admin-login h3 {
   margin-bottom: 1rem;
+  font-weight: 600;
 }
 
 /* Container holding the two input groups side by side */
@@ -138,13 +142,15 @@
   display: flex;
   gap: 1rem;
   margin-bottom: 1rem;
+  justify-content: space-between;
 }
 
 /* Each label + input stacked vertically */
 .input-group {
   display: flex;
   flex-direction: column;
-  flex: 1; /* inputs share available width */
+  flex: 1;
+  min-width: 0; /* prevent overflow */
 }
 
 /* Style the labels */
@@ -154,16 +160,31 @@
   text-align: left;
 }
 
-/* Inputs fill their container */
+/* Inputs fill their container, but limit max width */
 .input-group input {
   padding: 0.6rem;
   border-radius: 1rem;
   border: none;
   outline: none;
   font-size: 1rem;
+  width: 100%;
+  max-width: 200px; /* Keeps inputs narrower than full container */
+  box-sizing: border-box;
 }
 
-/* Button styling consistent with your existing styles */
+/* Responsive: stack inputs on small screens */
+@media (max-width: 480px) {
+  .inputs-row {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .input-group input {
+    max-width: 100%; /* full width on mobile */
+  }
+}
+
+/* Admin login button styling */
 #admin-login-btn {
   padding: 0.6rem;
   font-size: 1rem;
@@ -173,9 +194,32 @@
   color: black;
   cursor: pointer;
   transition: background 0.3s;
-  width: 100%; /* full width to align with inputs */
+  width: 100%; /* full width matching container */
+  max-width: 450px; /* keep consistent with container */
+  margin: 0 auto; /* center if max-width kicks in */
+  display: block;
 }
 
 #admin-login-btn:hover {
+  background: #ddd;
+}
+
+/* Optional: adjust download button to match style */
+#download-btn {
+  margin-top: 1rem;
+  padding: 0.6rem;
+  font-size: 1rem;
+  border: none;
+  border-radius: 0.6rem;
+  background: white;
+  color: black;
+  cursor: pointer;
+  transition: background 0.3s;
+  width: 100%;
+  max-width: 450px;
+  display: none; /* initially hidden by JS */
+}
+
+#download-btn:hover {
   background: #ddd;
 }
