@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OnThePlatform Signup</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="logo-container">
+        <img src="on the platfrom no txt.png" alt="OnThePlatform Logo" class="logo" />
+        <span class="brand-name">OnThePlatform</span>
+      </div>
+    </header>
+
+    <main>
+      <h1>The Wait Is Nearly Over</h1>
+      <p class="subtitle">
+        Sign up now to gain your secured spot<br />
+        and join us on our path to bringing small<br />
+        artists together.
+      </p>
+
+      <form id="signup-form">
+        <label for="firstName">Name:</label>
+        <input type="text" id="firstName" name="firstName" required />
+
+        <label for="lastName">Last Name:</label>
+        <input type="text" id="lastName" name="lastName" required />
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required />
+
+        <label for="phone">Phone Number: ( optional )</label>
+        <input type="tel" id="phone" name="phone" />
+
+        <button type="submit">Claim Your Spot</button>
+      </form>
+      <!-- Admin Login Section -->
+
+  
+    </main>
+
+    <footer>
+      <p>© 2025 OnThePlatform. All rights reserved.</p>
+      <div class="footer-links">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Service</a>
+      </div>
+      <div id="admin-login" style="margin-top: 2rem;">
+    <h3>Admin Access</h3>
+    <input type="text" id="admin-email" placeholder="Username" />
+    <input type="password" id="admin-password" placeholder="Password" />
+    <button id="admin-login-btn">Login as Admin</button>
+  </div>
+  
+  <!-- Hidden Download Button -->
+  <button id="download-btn" style="display:none; margin-top: 1rem;">Download Spreadsheet</button>
+    </footer>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
