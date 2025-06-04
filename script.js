@@ -8,10 +8,10 @@ const adminPasswordInput = document.getElementById('admin-password');
 const adminUsername = "admin123";
 const adminPassword = "admin123";
 
-// Google Apps Script Web App URL
-const scriptURL = "https://script.google.com/macros/s/AKfycbyKLYAifCTkDILh0tM9lQWQ3mWcq0Dwm_DRGcvgOrHd52IRMq7z4iqUEg22Qqavdp2faQ/exec";
+// ✅ Web App URL
+const scriptURL = "https://script.google.com/macros/s/AKfycbwBAnw5grkSpF3pjb1J0oVP0ZctYLNI3OOXWgXaCAqlFdb3uW45Vwup2lFKv8rEiyIocA/exec";
 
-// Google Sheet direct view URL (for admin access)
+// ✅ Google Sheet view link for admin
 const googleSheetURL = "https://docs.google.com/spreadsheets/d/14WD76Im1aGrk8cvj7Iq2H8Nqa1jdmCYRZRCN22qkr6s";
 
 // Handle form submission
