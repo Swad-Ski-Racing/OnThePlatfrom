@@ -8,21 +8,11 @@ const adminPasswordInput = document.getElementById('admin-password');
 const adminUsername = "admin123";
 const adminPassword = "admin123";
 
-// Google Apps Script Web App URL to submit data
+// Google Apps Script Web App URL
 const scriptURL = "https://script.google.com/macros/s/AKfycbyKLYAifCTkDILh0tM9lQWQ3mWcq0Dwm_DRGcvgOrHd52IRMq7z4iqUEg22Qqavdp2faQ/exec";
 
-// Google Sheet URL for admin to download full data
+// Google Sheet direct view URL (for admin access)
 const googleSheetURL = "https://docs.google.com/spreadsheets/d/14WD76Im1aGrk8cvj7Iq2H8Nqa1jdmCYRZRCN22qkr6s";
-
-// Local data storage for form submissions
-let csvData = JSON.parse(localStorage.getItem('signupData')) || [
-  ['First Name', 'Last Name', 'Email', 'Phone Number']
-];
-
-// Save local data
-function saveData() {
-  localStorage.setItem('signupData', JSON.stringify(csvData));
-}
 
 // Handle form submission
 form.addEventListener('submit', function (e) {
@@ -38,25 +28,28 @@ form.addEventListener('submit', function (e) {
     return;
   }
 
-  // Save locally for admin CSV download (optional)
-  csvData.push([firstName, lastName, email, phone]);
-  saveData();
+  const formData = new FormData();
+  formData.append('firstName', firstName);
+  formData.append('lastName', lastName);
+  formData.append('email', email);
+  formData.append('phone', phone);
 
-  // Submit data to Google Sheets backend
   fetch(scriptURL, {
     method: 'POST',
-    body: JSON.stringify({ firstName, lastName, email, phone }),
-    headers: {
-      'Content-Type': 'application/json'
-    }
+    body: formData
   })
-  .then(response => response.json())
-  .catch(err => {
-    console.error("Google Sheets submission failed:", err);
-  });
-
-  form.reset();
-  alert(`Thanks, ${firstName}! Your spot is secured.`);
+    .then(response => {
+      if (response.ok) {
+        alert(`Thanks, ${firstName}! Your spot is secured.`);
+        form.reset();
+      } else {
+        alert("Submission failed. Please try again later.");
+      }
+    })
+    .catch(error => {
+      console.error("Submission error:", error);
+      alert("An error occurred while submitting your form.");
+    });
 });
 
 // Handle admin login
@@ -72,7 +65,7 @@ adminLoginBtn.addEventListener('click', function () {
   }
 });
 
-// When admin clicks download, open live Google Sheet (not localStorage)
+// Admin download opens live Google Sheet
 downloadBtn.addEventListener('click', function () {
   window.open(googleSheetURL, "_blank");
 });
