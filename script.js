@@ -8,8 +8,21 @@ const adminPasswordInput = document.getElementById('admin-password');
 const adminUsername = "admin123";
 const adminPassword = "admin123";
 
-// Google Apps Script Web App URL
+// Google Apps Script Web App URL to submit data
 const scriptURL = "https://script.google.com/macros/s/AKfycbyKLYAifCTkDILh0tM9lQWQ3mWcq0Dwm_DRGcvgOrHd52IRMq7z4iqUEg22Qqavdp2faQ/exec";
+
+// Google Sheet URL for admin to download full data
+const googleSheetURL = "https://docs.google.com/spreadsheets/d/14WD76Im1aGrk8cvj7Iq2H8Nqa1jdmCYRZRCN22qkr6s";
+
+// Local data storage for form submissions
+let csvData = JSON.parse(localStorage.getItem('signupData')) || [
+  ['First Name', 'Last Name', 'Email', 'Phone Number']
+];
+
+// Save local data
+function saveData() {
+  localStorage.setItem('signupData', JSON.stringify(csvData));
+}
 
 // Handle form submission
 form.addEventListener('submit', function (e) {
@@ -25,29 +38,25 @@ form.addEventListener('submit', function (e) {
     return;
   }
 
-  const payload = {
-    firstName,
-    lastName,
-    email,
-    phone
-  };
+  // Save locally for admin CSV download (optional)
+  csvData.push([firstName, lastName, email, phone]);
+  saveData();
 
+  // Submit data to Google Sheets backend
   fetch(scriptURL, {
     method: 'POST',
-    body: JSON.stringify(payload),
+    body: JSON.stringify({ firstName, lastName, email, phone }),
     headers: {
       'Content-Type': 'application/json'
     }
   })
-    .then(res => res.json())
-    .then(data => {
-      alert(`Thanks, ${firstName}! Your spot is secured.`);
-      form.reset();
-    })
-    .catch(err => {
-      console.error("Submission failed", err);
-      alert("There was an error submitting the form. Please try again.");
-    });
+  .then(response => response.json())
+  .catch(err => {
+    console.error("Google Sheets submission failed:", err);
+  });
+
+  form.reset();
+  alert(`Thanks, ${firstName}! Your spot is secured.`);
 });
 
 // Handle admin login
@@ -56,16 +65,14 @@ adminLoginBtn.addEventListener('click', function () {
   const inputPassword = adminPasswordInput.value;
 
   if (inputUsername === adminUsername && inputPassword === adminPassword) {
-    alert("Admin access granted");
+    alert("Admin access granted.");
     downloadBtn.style.display = 'block';
   } else {
-    alert("Access denied");
+    alert("Access denied. Incorrect credentials.");
   }
 });
 
-// CSV download button (manual for now)
+// When admin clicks download, open live Google Sheet (not localStorage)
 downloadBtn.addEventListener('click', function () {
-  alert("To download all signups, open the Google Sheet and go to File → Download → CSV.");
-  window.open("https://docs.google.com/spreadsheets/d/14WD76Im1aGrk8cvj7Iq2H8Nqa1jdmCYRZRCN22qkr6s
-", "_blank");
+  window.open(googleSheetURL, "_blank");
 });
