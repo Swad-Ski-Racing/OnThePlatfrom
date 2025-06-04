@@ -122,19 +122,60 @@
   }
 #admin-login {
   margin-top: 2rem;
+  max-width: 450px;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  color: white; /* match page text color */
+}
+
+#admin-login h3 {
+  margin-bottom: 1rem;
+}
+
+/* Container holding the two input groups side by side */
+.inputs-row {
   display: flex;
-  align-items: center;
-  gap: 0.5rem;
+  gap: 1rem;
+  margin-bottom: 1rem;
 }
 
-#admin-login input {
-  flex: 1;
-  min-width: 0;
-  padding: 0.5rem 1rem;
+/* Each label + input stacked vertically */
+.input-group {
+  display: flex;
+  flex-direction: column;
+  flex: 1; /* inputs share available width */
+}
+
+/* Style the labels */
+.input-group label {
+  margin-bottom: 0.3rem;
+  font-size: 0.9rem;
+  text-align: left;
+}
+
+/* Inputs fill their container */
+.input-group input {
+  padding: 0.6rem;
+  border-radius: 1rem;
+  border: none;
+  outline: none;
   font-size: 1rem;
 }
 
-#admin-login button {
-  padding: 0.5rem 1rem;
+/* Button styling consistent with your existing styles */
+#admin-login-btn {
+  padding: 0.6rem;
   font-size: 1rem;
+  border: none;
+  border-radius: 0.6rem;
+  background: white;
+  color: black;
+  cursor: pointer;
+  transition: background 0.3s;
+  width: 100%; /* full width to align with inputs */
+}
+
+#admin-login-btn:hover {
+  background: #ddd;
 }
