@@ -120,14 +120,20 @@
   .footer-links a:hover {
     text-decoration: underline;
   }
-  #admin-login {
+#admin-login {
   margin-top: 2rem;
   display: flex;
   align-items: center;
-  gap: 0.5rem; /* space between items */
+  gap: 0.5rem;
 }
 
-#admin-login input,
+#admin-login input {
+  flex: 1;
+  min-width: 0;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+}
+
 #admin-login button {
   padding: 0.5rem 1rem;
   font-size: 1rem;
