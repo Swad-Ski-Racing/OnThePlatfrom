@@ -8,15 +8,8 @@ const adminPasswordInput = document.getElementById('admin-password');
 const adminUsername = "admin123";
 const adminPassword = "admin123";
 
-// Load existing data or initialize new
-let csvData = JSON.parse(localStorage.getItem('signupData')) || [
-  ['First Name', 'Last Name', 'Email', 'Phone Number']
-];
-
-// Save csvData to localStorage
-function saveData() {
-  localStorage.setItem('signupData', JSON.stringify(csvData));
-}
+// Google Apps Script Web App URL
+const scriptURL = "https://script.google.com/macros/s/AKfycbyKLYAifCTkDILh0tM9lQWQ3mWcq0Dwm_DRGcvgOrHd52IRMq7z4iqUEg22Qqavdp2faQ/exec";
 
 // Handle form submission
 form.addEventListener('submit', function (e) {
@@ -32,11 +25,29 @@ form.addEventListener('submit', function (e) {
     return;
   }
 
-  csvData.push([firstName, lastName, email, phone]);
-  saveData();
-  form.reset();
+  const payload = {
+    firstName,
+    lastName,
+    email,
+    phone
+  };
 
-  alert(`Thanks, ${firstName}! Your spot is secured.`);
+  fetch(scriptURL, {
+    method: 'POST',
+    body: JSON.stringify(payload),
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  })
+    .then(res => res.json())
+    .then(data => {
+      alert(`Thanks, ${firstName}! Your spot is secured.`);
+      form.reset();
+    })
+    .catch(err => {
+      console.error("Submission failed", err);
+      alert("There was an error submitting the form. Please try again.");
+    });
 });
 
 // Handle admin login
@@ -45,23 +56,16 @@ adminLoginBtn.addEventListener('click', function () {
   const inputPassword = adminPasswordInput.value;
 
   if (inputUsername === adminUsername && inputPassword === adminPassword) {
-    alert("Admin access granted.");
+    alert("Admin access granted");
     downloadBtn.style.display = 'block';
   } else {
-    alert("Access denied. Incorrect credentials.");
+    alert("Access denied");
   }
 });
 
-// Handle CSV download
+// CSV download button (manual for now)
 downloadBtn.addEventListener('click', function () {
-  const csvContent = 'data:text/csv;charset=utf-8,'
-    + csvData.map(row => row.map(cell => `"${cell}"`).join(',')).join('\n');
-
-  const encodedUri = encodeURI(csvContent);
-  const link = document.createElement('a');
-  link.setAttribute('href', encodedUri);
-  link.setAttribute('download', 'signups.csv');
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
+  alert("To download all signups, open the Google Sheet and go to File → Download → CSV.");
+  window.open("https://docs.google.com/spreadsheets/d/14WD76Im1aGrk8cvj7Iq2H8Nqa1jdmCYRZRCN22qkr6s
+", "_blank");
 });
